@@ -29,6 +29,8 @@ class Agent(object):
     :return: a list of dict, the key in the dict includes:
         order_id and driver_id, the pair indicating the assignment
     """
+
+    """
     dispatch_observ.sort(key=lambda od_info: od_info['reward_units'], reverse=True)
     assigned_order = set()
     assigned_driver = set()
@@ -40,6 +42,29 @@ class Agent(object):
       assigned_order.add(od["order_id"])
       assigned_driver.add(od["driver_id"])
       dispatch_action.append(dict(order_id=od["order_id"], driver_id=od["driver_id"]))
+    return dispatch_action
+    """
+
+    id_order = list({}.fromkeys(od['order_id'] for od in dispatch_observ).keys())
+    id_driver = list({}.fromkeys(od['driver_id'] for od in dispatch_observ).keys())
+    order_id = dict((order, idx) for idx, order in enumerate(id_order))
+    driver_id = dict((driver, idx) for idx, driver in enumerate(id_driver))
+    N = len(order_id)
+    M = len(driver_id)
+
+    import networkx as nx
+    G = nx.complete_bipartite_graph(N, M)
+    for od in dispatch_observ:
+      order = order_id[od['order_id']]
+      driver = N + driver_id[od['driver_id']]
+      G.edges[order, driver]['weight'] = -od['reward_units']
+
+    from networkx.algorithms.bipartite.matching import minimum_weight_full_matching
+    match = minimum_weight_full_matching(G)
+
+    dispatch_action = []
+    for idx, order in enumerate(id_order):
+      dispatch_action.append({'driver_id': id_driver[match[idx] - N], 'order_id': order})
     return dispatch_action
 
   def reposition(self, repo_observ):
