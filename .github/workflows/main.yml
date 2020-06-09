@@ -19,9 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Update Conda environment
-      uses: matthewrmshin/conda-action@v1
-      with:
-        args: conda env update -f ./environment.yml
+    - name: Build
+      run: docker build -t kddcup -f Dockerfile .
     - name: Run
-      run: python local_test.py
+      run: docker run kddcup --rm
