@@ -19,9 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Update Conda environment with "requirements.yml"
+    - name: Update Conda environment
       uses: matthewrmshin/conda-action@v1
       with:
-        args: conda env update -f ./requirements.yml
+        args: conda env update -f ./environment.yml
     - name: Run
       run: python local_test.py
