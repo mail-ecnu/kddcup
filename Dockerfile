@@ -11,8 +11,8 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     echo "export PATH=/opt/conda/bin:$PATH" >> ~/.bashrc
 
 ENV PATH /opt/conda/bin:$PATH
-
-COPY environment.yml /app/environment.yml
+ARG ENVFILE=environment.yml
+COPY $ENVFILE /app/environment.yml
 WORKDIR /app
 
 # Create the environment:

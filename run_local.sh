@@ -8,5 +8,5 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$DIR"
 
-docker build -t kddcup -f Dockerfile .
+docker build --build-arg ENVFILE="environment.yml.local" -t kddcup -f Dockerfile .
 docker run -it --rm kddcup

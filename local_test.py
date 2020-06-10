@@ -13,6 +13,10 @@ SUBMISSION_DIR = os.path.abspath('model')
 # Sample data is provided to illustrate the input data type
 # from the simulator to your agent
 SAMPLE_DIR = os.path.abspath('samples')
+try:
+    SAMPLE_DIR = os.path.abspath(sys.argv[1])
+except:
+    pass
 
 
 def main(*args, **kwargs):
