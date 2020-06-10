@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: docker build -t kddcup -f Dockerfile .
     - name: Run
-      run: docker run kddcup --rm
+      run: docker run --rm kddcup
