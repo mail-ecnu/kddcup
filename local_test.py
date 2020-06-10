@@ -26,6 +26,7 @@ def main(*args, **kwargs):
   # Initialize the user-defined agent
   agent = Agent()
 
+  print("Loading data...", flush=True)
   # Read sample observation data and pass it to the agent for computing actions
   # data schema is the same as the one passed to the agent during simulations
   with open(os.path.join(SAMPLE_DIR, 'dispatch_observ'), 'r') as f:
@@ -37,13 +38,16 @@ def main(*args, **kwargs):
     with open(os.path.join(TEST_DIR, 'dispatch_observ'), 'r') as f:
       dispatch_observ = json.load(f)
   except:
-    print("Use sample dispatch_observ")
+    print("Use sample dispatch_observ", flush=True)
   try:
     with open(os.path.join(TEST_DIR, 'repo_observ'), 'r') as f:
       repo_observ = json.load(f)
   except:
-    print("Use sample repo_observ")
+    print("Use sample repo_observ", flush=True)
 
+  print("Data loaded!", flush=True)
+  print("===========================================================")
+  print("===========================================================")
   # print("Dispatch observation:\n{}".format(pformat(dispatch_observ)))
   # Implement your own dispatch procedures
   dispatch_action = agent.dispatch(dispatch_observ)
