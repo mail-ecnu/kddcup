@@ -26,5 +26,6 @@ COPY . /app
 
 # Make RUN commands use the new environment:
 # SHELL ["conda", "run", "-n", "kddcup", "/bin/bash", "-c"]
+VOLUME ["/app/tests"]
 RUN echo "source activate kddcup" >> ~/.bashrc
 CMD ["/app/entrypoint.sh"]

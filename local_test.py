@@ -13,11 +13,7 @@ SUBMISSION_DIR = os.path.abspath('model')
 # Sample data is provided to illustrate the input data type
 # from the simulator to your agent
 SAMPLE_DIR = os.path.abspath('samples')
-try:
-    SAMPLE_DIR = os.path.abspath(sys.argv[1])
-except:
-    pass
-
+TEST_DIR = os.path.abspath('tests')
 
 def main(*args, **kwargs):
   # unused arguments
@@ -37,13 +33,24 @@ def main(*args, **kwargs):
   with open(os.path.join(SAMPLE_DIR, 'repo_observ'), 'r') as f:
     repo_observ = json.load(f)
 
-  print("Dispatch observation:\n{}".format(pformat(dispatch_observ)))
+  try:
+    with open(os.path.join(TEST_DIR, 'dispatch_observ'), 'r') as f:
+      dispatch_observ = json.load(f)
+  except:
+    print("Use sample dispatch_observ")
+  try:
+    with open(os.path.join(TEST_DIR, 'repo_observ'), 'r') as f:
+      repo_observ = json.load(f)
+  except:
+    print("Use sample repo_observ")
+
+  # print("Dispatch observation:\n{}".format(pformat(dispatch_observ)))
   # Implement your own dispatch procedures
   dispatch_action = agent.dispatch(dispatch_observ)
   print("Agent dispatch action:\n{}".format(pformat(dispatch_action)))
   print("============================================================")
   print("============================================================")
-  print("Reposition observation:\n{}".format(pformat(repo_observ)))
+  # print("Reposition observation:\n{}".format(pformat(repo_observ)))
   # Implement your own reposition procedures
   reposition_action = agent.reposition(repo_observ)
   print("Agent reposition action:\n{}".format(pformat(reposition_action)))
